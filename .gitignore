@@ -1,0 +1,6 @@
+build
+vendored
+.cache
+.vscode
+string
+string.c
