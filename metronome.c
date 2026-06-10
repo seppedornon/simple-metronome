@@ -1,5 +1,4 @@
 #include "metronome.h"
-#include "SDL3/SDL_keyboard.h"
 #include "SDL3_mixer/SDL_mixer.h"
 #include "player.h"
 
@@ -62,4 +61,9 @@ void end(Metronome* metronome){
     MIX_Quit();
     TTF_Quit();
     SDL_Quit();
+}
+
+bool isMouseInRect(float mx, float my, SDL_FRect *rect) {
+  return (mx >= rect->x && mx <= (rect->x + rect->w) && my >= rect->y &&
+          my <= (rect->y + rect->h));
 }

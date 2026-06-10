@@ -1,5 +1,4 @@
 #include "SDL3/SDL_events.h"
-#include "SDL3/SDL_keyboard.h"
 #include "SDL3/SDL_log.h"
 #include "SDL3/SDL_mouse.h"
 #include "SDL3/SDL_render.h"
@@ -12,6 +11,7 @@
 #include <SDL3_mixer/SDL_mixer.h>
 #include <stdlib.h>
 #include <string.h>
+#include "inputLabel.h"
 #include "metronome.h"
 #include "button.h"
 #include "player.h"
@@ -30,12 +30,11 @@ Button playBtn = {
     .rect = {35.00F, 644.00F, 329.00F, 43.00F}
 };
 
-Button bpmBtn = {
+InputLabel bpmBtn = {
     .hovered = false,
-    .pressed = false,
     .texture = NULL,
     .rect = {135.00F, 91.00F, 130.00F, 86.00F},
-    .hasInput = true
+    .isEditing = false
 };
 
 Player player = {
@@ -63,7 +62,7 @@ void loop(Metronome* metronome)
     char bpmBuff[16];
     snprintf(bpmBuff, sizeof(bpmBuff),"%d", metronome->player->bpm);
     int bpmlen = strlen(bpmBuff);
-    setButtonTexture( metronome->renderer, metronome->font, &bpmBtn, bpmBuff);
+    setInputTexture( &bpmBtn, metronome->renderer, metronome->font,  bpmBuff);
 
     if (playBtn.texture == NULL)
     {
@@ -72,8 +71,6 @@ void loop(Metronome* metronome)
     bool quit = false;
     SDL_Event e;
     SDL_zero(e);
-
-    bool editingBpm = false;
 
     while (!quit)
     {
@@ -87,7 +84,7 @@ void loop(Metronome* metronome)
 
 
             handlePlayButtonPress(&e, &playBtn, metronome);
-            handleBpmInputButtonPress(&e, &bpmBtn, metronome, bpmBuff, &editingBpm);
+            handleInputButtonPress(&bpmBtn, &e, metronome, bpmBuff);
 
         }
 
@@ -101,7 +98,7 @@ void loop(Metronome* metronome)
         }
 
         drawButton(metronome->renderer, &playBtn, false);
-        drawButton(metronome->renderer, &bpmBtn, editingBpm);
+        drawInputLabel(&bpmBtn, metronome->renderer);
         SDL_RenderPresent(metronome->renderer);
         clearWindow(metronome->renderer);
     }

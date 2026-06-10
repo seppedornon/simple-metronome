@@ -13,7 +13,7 @@
 
 #define WIDTH 400
 #define HEIGHT 750
-#define TEXT_SIZE 20
+#define TEXT_SIZE 50
 
 typedef struct Metronome{
     SDL_Window *window;
@@ -25,6 +25,8 @@ typedef struct Metronome{
 void clearWindow(SDL_Renderer *renderer);
 void InitSetup(Metronome* metronome, MIX_Mixer *mixer);
 void end(Metronome* metronome);
+
+bool isMouseInRect(float mx, float my, SDL_FRect *rect);
 
 
 

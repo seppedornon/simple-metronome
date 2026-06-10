@@ -4,3 +4,4 @@ vendored
 .vscode
 string
 string.c
+compile_commands.json

@@ -11,6 +11,6 @@ add_subdirectory(vendored/SDL_ttf EXCLUDE_FROM_ALL)
 
 add_subdirectory(vendored/SDL_mixer EXCLUDE_FROM_ALL)
 
-add_executable(metronome MACOSX_BUNDLE main.c metronome.c player.c button.c)
+add_executable(metronome MACOSX_BUNDLE main.c metronome.c player.c button.c inputLabel.c)
 # Link to the actual SDL3 library.
 target_link_libraries(metronome PRIVATE SDL3_mixer::SDL3_mixer SDL3_ttf::SDL3_ttf SDL3::SDL3)

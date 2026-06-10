@@ -22,10 +22,7 @@ typedef struct Button
 } Button;
 
 void setButtonTexture(SDL_Renderer *renderer, TTF_Font *font, Button *btn, char *title);
-bool isMouseInRect(float mx, float my, SDL_FRect *rect);
 void handlePlayButtonPress(SDL_Event *e, Button *btn, Metronome* metronome);
-void handleBpmInputButtonPress(SDL_Event *e, Button *btn, Metronome* metronome, char* buffer, bool* isEditing);
 void drawButton(SDL_Renderer *renderer, Button *btn, bool isEditing);
-bool isEditingBpm(SDL_Event *e, Button *btn);
 
 #endif
