@@ -12,28 +12,26 @@
 void setButtonTexture(SDL_Renderer *renderer, TTF_Font *font, Button *btn,
                       char *title) {
 
-
-
-  if(btn->texture){
-      SDL_DestroyTexture(btn->texture);
-      btn->texture = NULL;
-      if(strlen(title) == 0){
-          return;
-      }
+  if (btn->texture) {
+    SDL_DestroyTexture(btn->texture);
+    btn->texture = NULL;
+    if (strlen(title) == 0) {
+      return;
+    }
   }
 
   SDL_Surface *surf = TTF_RenderText_Blended(font, title, 0, TEXT_COLOR);
   if (surf == NULL) {
-      SDL_Log("Error creating the surface for buffer '%s': %s\n",title, SDL_GetError());
+    SDL_Log("Error creating the surface for buffer '%s': %s\n", title,
+            SDL_GetError());
   }
   btn->texture = SDL_CreateTextureFromSurface(renderer, surf);
   if (btn->texture == NULL) {
-    SDL_Log("Error creating the texture for buffer '%s': %s\n",title, SDL_GetError());
-
+    SDL_Log("Error creating the texture for buffer '%s': %s\n", title,
+            SDL_GetError());
   }
   SDL_DestroySurface(surf);
 }
-
 
 void handlePlayButtonPress(SDL_Event *e, Button *btn, Metronome *metronome) {
   if (e->type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
@@ -49,15 +47,15 @@ void handlePlayButtonPress(SDL_Event *e, Button *btn, Metronome *metronome) {
 
 void drawButton(SDL_Renderer *renderer, Button *btn, bool isEditing) {
 
-    if (btn->pressed) {
-      SDL_SetRenderDrawColor(renderer, 255, 12, 10, 255);
-      // btn->pressed = false;
-    } else if (btn->hovered) {
-      SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-      btn->hovered = false;
-    } else {
-      SDL_SetRenderDrawColor(renderer, 54, 54, 54, 53);
-    }
+  if (btn->pressed) {
+    SDL_SetRenderDrawColor(renderer, 255, 12, 10, 255);
+    // btn->pressed = false;
+  } else if (btn->hovered) {
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    btn->hovered = false;
+  } else {
+    SDL_SetRenderDrawColor(renderer, 54, 54, 54, 53);
+  }
 
   SDL_RenderFillRect(renderer, &(btn->rect));
 
@@ -73,10 +71,10 @@ void drawButton(SDL_Renderer *renderer, Button *btn, bool isEditing) {
     dst.y = (btn->rect.y + (btn->rect.h / 2)) - (dst.h / 2);
     SDL_RenderTexture(renderer, btn->texture, NULL, &dst);
 
-    if(isEditing){
-        SDL_FRect caret = {(dst.x + dst.w), (dst.y), 2.0F, dst.h};
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderFillRect(renderer, &caret);
+    if (isEditing) {
+      SDL_FRect caret = {(dst.x + dst.w), (dst.y), 2.0F, dst.h};
+      SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+      SDL_RenderFillRect(renderer, &caret);
     }
   }
 }
